@@ -3,9 +3,9 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         ResurrectOffical {
-            keyAlias 'ResurrectOffical'
-            keyPassword 'MjZiYji3'
-            storeFile file('C:/Users/Laptgop/Documents/Resurrectoffical.jks')
+            keyAlias ''
+            keyPassword ''
+            storeFile file('')
         }
     }
     compileSdkVersion 23
