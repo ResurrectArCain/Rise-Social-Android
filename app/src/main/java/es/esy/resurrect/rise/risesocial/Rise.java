@@ -1,113 +1,67 @@
 package es.esy.resurrect.rise.risesocial;
 
-//fixme Repair Webapp to only use Webapp
-
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-public class Rise extends AppCompatActivity {
-
-    private WebView mWebView;
-
+public class Rise extends Activity {
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Window window = getWindow();
+        window.setFormat(PixelFormat.RGBA_8888);
+    }
+    /** Called when the activity is first created. */
+    Thread splashTread;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_rise);
-        WebView myWebView = (WebView) findViewById(R.id.webView);
-        WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        myWebView = (WebView) findViewById(R.id.webView);
-        myWebView.loadUrl("http://www.resurrect.esy.es/social");
-        WebView webView = (WebView) findViewById(R.id.webView);
-        myWebView.setWebViewClient(new WebViewClient());
+        setContentView(R.layout.activity_splash);
+        StartAnimations();
+    }
+    private void StartAnimations() {
+        Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
+        anim.reset();
+        LinearLayout l=(LinearLayout) findViewById(R.id.lin_lay);
+        l.clearAnimation();
+        l.startAnimation(anim);
 
-        //todo Remove this once we find a better alternative
+        anim = AnimationUtils.loadAnimation(this, R.anim.translate);
+        anim.reset();
+        ImageView iv = (ImageView) findViewById(R.id.splash);
+        iv.clearAnimation();
+        iv.startAnimation(anim);
 
-        webView.setInitialScale(1);
-        WebSettings settings = webView.getSettings();
-        settings.setMinimumFontSize(19);
-        settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
+        splashTread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    int waited = 0;
+                    // Splash screen pause time
+                    while (waited < 3500) {
+                        sleep(100);
+                        waited += 100;
+                    }
+                    Intent intent = new Intent(Rise.this,
+                            Splash.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                    Rise.this.finish();
+                } catch (InterruptedException e) {
+                    // do nothing
+                } finally {
+                    Rise.this.finish();
+                }
 
-        webView.getSettings().setUserAgentString("Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30");
+            }
+        };
+        splashTread.start();
+
     }
 
-    public class WebAppInterface {
-        Context mContext;
-
-        /**
-         * Instantiate the interface and set the context
-         */
-        WebAppInterface(Context c) {
-            mContext = c;
-        }
-
-        /**
-         * Show a toast from the web page
-         */
-        @JavascriptInterface
-        public void showToast(String toast) {
-            Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private class myWebview extends WebViewClient {
-        @Override
-        //
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //    if (Uri.parse(url).getHost().length() == 0) return false;{
-            //        return false;
-            view.loadUrl(url);
-            return true;
-        }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        WebView myWebView = (WebView) findViewById(R.id.webView);
-
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && myWebView.canGoBack()) {
-            myWebView.goBack(); // Go to previous page
-            return true;
-        }
-        // Use this as else part
-        return super.onKeyDown(keyCode, event);
-    }
-
-    public static String changedHeaderHtml(String htmlText) {
-
-        String head = "<head><meta name=\"viewport\" content=\"width=device-width, user-scalable=yes\" /></head>";
-
-        String closedTag = "</body></html>";
-        String changeFontHtml = head + htmlText + closedTag;
-        return changeFontHtml;
-    }
-    public static void displayHtmlText(String htmlContent, String message,
-                                       WebView webView,
-                                       RelativeLayout videoLayout, LinearLayout standardLayout, LinearLayout webviewLayout){
-
-        webView.setWebChromeClient(new WebChromeClient());
-        String changeFontHtml = Rise.changedHeaderHtml(htmlContent);
-        webView.loadDataWithBaseURL(null, changeFontHtml,
-                "text/html", "UTF-8", null);
-
-        webviewLayout.setVisibility(webView.VISIBLE);
-        standardLayout.setVisibility(webView.GONE);
-        videoLayout.setVisibility(webView.GONE);
-    }
 }
