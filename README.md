@@ -3,7 +3,7 @@ Rise Social is Resurrect's Social network this is the application for android
 
 #Requirements
 
-Knowledge of Java
-Knowledge of Android
+<p>Knowledge of Java</p>
+<p>Knowledge of Android</p>
 
 Android Studio 2 >
