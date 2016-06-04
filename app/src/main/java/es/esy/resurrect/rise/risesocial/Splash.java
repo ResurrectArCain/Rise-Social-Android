@@ -1,15 +1,15 @@
 package es.esy.resurrect.rise.risesocial;
 
-//fixme Repair Webapp to only use Webapp
+/*
+COPYRIGHT
+RESURRECT (C) 2012 - 2016
+RISE SOCIAL IS A TRADEMARK OF RESURRECT
+*/
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.JavascriptInterface;
@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class Splash extends Activity {
+    //WEB ACTIVITY
 
     private WebView mWebView;
 
@@ -34,7 +35,7 @@ public class Splash extends Activity {
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         myWebView = (WebView) findViewById(R.id.webView);
-        myWebView.loadUrl("http://www.resurrect.esy.es/social");
+        myWebView.loadUrl("http://www.risesocial.esy.es/");
         WebView webView = (WebView) findViewById(R.id.webView);
         myWebView.setWebViewClient(new WebViewClient());
 

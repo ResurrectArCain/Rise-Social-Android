@@ -1,5 +1,11 @@
 package es.esy.resurrect.rise.risesocial;
 
+/*
+COPYRIGHT
+RESURRECT (C) 2012 - 2016
+RISE SOCIAL IS A TRADEMARK OF RESURRECT
+*/
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -10,13 +16,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+//SPLASH SCREEN
+
 public class Rise extends Activity {
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
-    /** Called when the activity is first created. */
     Thread splashTread;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +49,7 @@ public class Rise extends Activity {
             public void run() {
                 try {
                     int waited = 0;
-                    // Splash screen pause time
+                    // PAUSE SPLASH
                     while (waited < 3500) {
                         sleep(100);
                         waited += 100;
@@ -53,7 +60,7 @@ public class Rise extends Activity {
                     startActivity(intent);
                     Rise.this.finish();
                 } catch (InterruptedException e) {
-                    // do nothing
+
                 } finally {
                     Rise.this.finish();
                 }
