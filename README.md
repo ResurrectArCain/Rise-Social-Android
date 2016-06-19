@@ -1,10 +1,11 @@
-# Rise-Social-Android
+<p>Rise-Social-Android</p>
 
-#CREATED USING ANDROID STUDIO 2
+<p>PUBLIC BRANCH</p>
+<p>this branch is used for pure public releases</p>
 
-#Requirements
-Android Studio 2 >
-Understanding of the Android platform
-Understanding of the Java Language
+<p>Requirements</p>
+<p>Android Studio 2 > </p>
+<p>Understanding of the Android platform</p>
+<p>Understanding of the Java Language</p>
 
 
