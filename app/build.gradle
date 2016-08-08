@@ -1,13 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        ResurrectOffical {
-            keyAlias 'ResurrectOffical'
-            keyPassword 'MjZiYji3'
-            storeFile file('C:/Users/Laptgop/Documents/Resurrectoffical.jks')
-        }
-    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
