@@ -1,4 +1,23 @@
 language: android
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "G6X/aWVqkY/8rGsLWrStFZL97mMtHqoOTJcjMUKVSDkdmr2dcbd27/tfDu9IyLMgJkM6xTfLNTgdgs4kWz6hMNoGaCSckwlXoacNA20aOvLuuGYUdM5yCo4Z57fQJMe5zQXdRmkwHG/3Ah9LofwOSpMOqBJz9miIYNKxuGbz/qWFOUPV1EMVkP8Y6Bfw0kOnqdeMnzNTdo5jYgmvZw2/q6vaMjVWLyBnfJc9UG25Uv3Y5raGSt8Ixyh41udXtCx/JtvlogARLj857gA5anoIT7aZPMq1dO99P2wSciBKUz1Rg836FCPXV4N5a5+r9t+9euH7E+y19icOR9BxXNtTMtDeJgsUwvkFYMlg3xukOJAyhnbHf/9GMAmCnYvME8cod/Yz/tuF/h78JoakxV/Vx5hct6k5wGlBvW0dgtNiPkcht/jv1EHM2SHg1KK79QWyB18RkFxCNemsXeAZxfCDbZ16OtrVky6Dlf/Gr6AuFynO/ct5mryrHGuvp2rUIuadcSu5OP2MfogJRITeaoMpQls4TNgVAKL6h2zlY75SzFOM3PVXdWqCl54KU0VqimQ4LHm5kW9G6sntrH6ya+BoyiZdJ5GG4roPVuzeMrBrmDfUpQsX3wl9M2g759Ax8ApYHyUUfL3EhbaoSbSIqJqU5Npg5La4jSvzHwY0vDoPaZ8="
+
+before_install:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "ResurrectArCain/Rise-Social-Android"
+      description: "Build submitted via Travis CI"
+    notification_email: stickmanclub1@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: coverity_scan
+    
 android:
   components:
 
